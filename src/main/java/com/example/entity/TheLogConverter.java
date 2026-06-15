@@ -58,6 +58,7 @@ public class TheLogConverter {
         stockLog.setLastModifiedUser(stock.getLastModifiedUser());
         stockLog.setProductId(stock.getProduct().getProductId());
         stockLog.setQuantity(stock.getQuantity());
+        stockLog.setSafetyStock(stock.getSafetyStock());
         stockLog.setSupplierId(stock.getSupplier().getSupplierId());
         stockLog.setVersion(stock.getVersion());
         return stockLog;

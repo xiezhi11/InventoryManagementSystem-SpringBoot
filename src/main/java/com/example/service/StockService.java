@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -15,6 +16,7 @@ public class StockService {
     private StockRepository stockRepository;
 
     public void insert(Stock stock) {
+        validateStock(stock);
         stockRepository.save(stock);
     }
 
@@ -27,6 +29,7 @@ public class StockService {
     }
 
     public void updateStock(Stock stock) {
+        validateStock(stock);
         stockRepository.save(stock);
     }
 
@@ -34,5 +37,16 @@ public class StockService {
         stockRepository.delete(stock);
     }
 
+    public List<Stock> findLowStock(Integer productId, Integer supplierId, Integer categoryId) {
+        return stockRepository.findLowStock(productId, supplierId, categoryId);
+    }
 
+    private void validateStock(Stock stock) {
+        if (stock.getQuantity() < 0) {
+            throw new IllegalArgumentException("Stock quantity cannot be negative");
+        }
+        if (stock.getSafetyStock() < 0) {
+            throw new IllegalArgumentException("Safety stock threshold cannot be negative");
+        }
+    }
 }
