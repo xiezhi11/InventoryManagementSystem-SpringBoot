@@ -38,6 +38,8 @@ public class Product implements Serializable {
 
 	private double productsellingPrice;
 
+	private boolean enabled = true;
+
 	private BigDecimal version;
 
 	//bi-directional many-to-one association to Category
@@ -127,6 +129,14 @@ public class Product implements Serializable {
 
 	public void setProductsellingPrice(double productsellingPrice) {
 		this.productsellingPrice = productsellingPrice;
+	}
+
+	public boolean isEnabled() {
+		return this.enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public BigDecimal getVersion() {
