@@ -7,6 +7,7 @@ import com.example.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -20,6 +21,13 @@ public class StockController {
     @RequestMapping("")
     public Iterable<Stock> getAllStock() {
         return stockService.findAll();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/low")
+    public List<Stock> getLowStock(@RequestParam(required = false) Integer productId,
+                                   @RequestParam(required = false) Integer supplierId,
+                                   @RequestParam(required = false) Integer categoryId) {
+        return stockService.findLowStock(productId, supplierId, categoryId);
     }
 
     @RequestMapping("/{id}")

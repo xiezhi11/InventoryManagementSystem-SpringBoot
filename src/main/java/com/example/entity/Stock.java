@@ -36,6 +36,8 @@ public class Stock implements Serializable {
 
 	private int quantity;
 
+	private int safetyStockLevel;
+
 	//private int stockId;
 
 	private BigDecimal version;
@@ -120,6 +122,14 @@ public class Stock implements Serializable {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public int getSafetyStockLevel() {
+		return this.safetyStockLevel;
+	}
+
+	public void setSafetyStockLevel(int safetyStockLevel) {
+		this.safetyStockLevel = safetyStockLevel;
 	}
 
 	/*public int getStockId() {
