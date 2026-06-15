@@ -3,6 +3,7 @@ package com.example.entity;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 
@@ -30,6 +31,21 @@ public class Invoice implements Serializable {
 	private double total;
 
 	private BigDecimal version;
+
+	@Enumerated(EnumType.STRING)
+	private InvoiceStatus status;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdDateTime;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date confirmedDateTime;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date paidDateTime;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date voidedDateTime;
 
 	//bi-directional many-to-one association to ProductInvoice
 	@OneToMany(mappedBy="invoice")
@@ -92,6 +108,46 @@ public class Invoice implements Serializable {
 
 	public void setVersion(BigDecimal version) {
 		this.version = version;
+	}
+
+	public InvoiceStatus getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(InvoiceStatus status) {
+		this.status = status;
+	}
+
+	public Date getCreatedDateTime() {
+		return this.createdDateTime;
+	}
+
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+
+	public Date getConfirmedDateTime() {
+		return this.confirmedDateTime;
+	}
+
+	public void setConfirmedDateTime(Date confirmedDateTime) {
+		this.confirmedDateTime = confirmedDateTime;
+	}
+
+	public Date getPaidDateTime() {
+		return this.paidDateTime;
+	}
+
+	public void setPaidDateTime(Date paidDateTime) {
+		this.paidDateTime = paidDateTime;
+	}
+
+	public Date getVoidedDateTime() {
+		return this.voidedDateTime;
+	}
+
+	public void setVoidedDateTime(Date voidedDateTime) {
+		this.voidedDateTime = voidedDateTime;
 	}
 
 	public List<ProductInvoice> getProductInvoices() {

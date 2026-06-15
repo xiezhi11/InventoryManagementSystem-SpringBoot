@@ -1,7 +1,9 @@
 package com.example.controller;
 
 
+import com.example.dto.InvoiceStatusUpdateRequest;
 import com.example.entity.Invoice;
+import com.example.entity.InvoiceStatus;
 import com.example.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +18,10 @@ public class InvoiceController {
     private InvoiceService invoiceService;
 
     @RequestMapping("")
-    public Iterable<Invoice> getAllInvoice() {
+    public Iterable<Invoice> getAllInvoice(@RequestParam(required = false) InvoiceStatus status) {
+        if (status != null) {
+            return invoiceService.findByStatus(status);
+        }
         return invoiceService.findAll();
     }
 
@@ -33,6 +38,11 @@ public class InvoiceController {
     @RequestMapping(method = RequestMethod.PUT,value ="/{id}")
     public void updateInvoice(@RequestBody Invoice invoice) {
         invoiceService.updateInvoice(invoice);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}/status")
+    public Invoice updateInvoiceStatus(@PathVariable int id, @RequestBody InvoiceStatusUpdateRequest request) {
+        return invoiceService.updateStatus(id, request.getStatus());
     }
 
     @RequestMapping(method = RequestMethod.DELETE,value ="/{id}")
