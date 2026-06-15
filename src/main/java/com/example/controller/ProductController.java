@@ -1,10 +1,13 @@
 package com.example.controller;
 
+import com.example.dto.PageResponse;
 import com.example.entity.Product;
 import com.example.entity.TheLogConverter;
 import com.example.service.ProductLogService;
 import com.example.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -22,9 +25,16 @@ public class ProductController {
     @Autowired
     private ProductLogService productLogService;
 
-    @RequestMapping("")
-    public Iterable<Product> getAllProducts() {
-        return productService.findAll();
+    @GetMapping("")
+    public PageResponse<Product> getAllProducts(
+            @PathVariable int categoryId,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Boolean enabled,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @PageableDefault(size = 20) Pageable pageable) {
+        return PageResponse.from(
+                productService.search(categoryId, name, enabled, minPrice, maxPrice, pageable));
     }
 
     @RequestMapping("/{id}")
